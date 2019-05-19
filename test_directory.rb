@@ -5,7 +5,11 @@ def input_students
   name = gets.chomp
   while !name.empty? do 
     students << {name: name}
-    puts "Now we have #{students.count} students."
+    if students.count == 1
+      puts "Now we have our first student"
+    else
+      puts "Now we have #{students.count} students."
+    end
     name = gets.chomp
   end
   students
@@ -30,19 +34,24 @@ def input_cohort(students)
   end
 end
 
-# students = [
-#  {name: "Dr Doom", cohort: :november}, 
-#  {name: "Thanos", cohort: :november},
-#  {name: "Viktor Vaughn", cohort: :november}, 
-#  {name: "Bill", cohort: :november}, 
-#  {name: "Elle Driver", cohort: :november},
-#  {name: "Hydra", cohort: :november}, 
-#  {name: "Oren Ishii", cohort: :november}, 
-#  {name: "Rodan", cohort: :november}, 
-#  {name: "Wilson Fisk", cohort: :november}, 
-#  {name: "King Gidorah", cohort: :november},  
-#  {name: "Smoke Monster", cohort: :november}
-# ]
+# displays students by cohort
+def print_by_cohort(students)
+  students_by_cohort = {}
+  students.each do |student|
+    cohort = student[:cohort]
+    name = student[:name]
+    if students_by_cohort[cohort] == nil
+      students_by_cohort[cohort] = []
+    end
+    students_by_cohort[cohort].push(name)
+  end
+  loop do 
+    puts "Choose cohort to display. Say stop to exit"
+    choice = gets.chomp
+    break if choice == "stop"
+    puts students_by_cohort[choice].join(', ')
+  end
+end
 
 def print_header
   puts "The students of Villains Academy"
@@ -84,10 +93,23 @@ end
 students = input_students
 print_header
 input_cohort(students)
+print_by_cohort(students)
 # print_by_letter(students)
 # length_selected(students)
-print(students)
+# print(students)
 print_footer(students)
 
-
+# students = [
+#  {name: "Dr Doom", cohort: :november}, 
+#  {name: "Thanos", cohort: :november},
+#  {name: "Viktor Vaughn", cohort: :november}, 
+#  {name: "Bill", cohort: :november}, 
+#  {name: "Elle Driver", cohort: :november},
+#  {name: "Hydra", cohort: :november}, 
+#  {name: "Oren Ishii", cohort: :november}, 
+#  {name: "Rodan", cohort: :november}, 
+#  {name: "Wilson Fisk", cohort: :november}, 
+#  {name: "King Gidorah", cohort: :november},  
+#  {name: "Smoke Monster", cohort: :november}
+# ]
 
