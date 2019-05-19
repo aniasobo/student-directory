@@ -4,11 +4,30 @@ def input_students
   students = []
   name = gets.chomp
   while !name.empty? do 
-    students << {name: name, cohort: :november}
+    students << {name: name}
     puts "Now we have #{students.count} students."
     name = gets.chomp
   end
   students
+end
+
+# assigns chosen cohort to chosen student
+def input_cohort(students)
+  loop do
+    puts "Choosing cohort"
+    puts "Choose candidate to assign cohort to:"
+    name = gets.chomp
+    puts "Choose cohort for #{name}"
+    cohort = gets.chomp
+    students.find do |student|  
+      if student[:name] == name 
+        student[:cohort] = cohort
+      end
+    end
+    puts "Do you wish to assing another? Y/N"
+    answer = gets.chomp
+    break if answer == "N" 
+  end
 end
 
 # students = [
@@ -51,10 +70,23 @@ def print_by_letter(students)
   end
 end
 
+# this method asks user for character limit
+def length_selected(students)
+  puts "Enter max number of characters"
+  num = gets.chomp.to_i
+  students.each do |student|
+    if "#{student[:name]}".length <= num
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end 
+end
+
 students = input_students
 print_header
-print_by_letter(students)
-# print(students)
+input_cohort(students)
+# print_by_letter(students)
+# length_selected(students)
+print(students)
 print_footer(students)
 
 
