@@ -3,11 +3,12 @@
 def print_menu
   puts "1. Input students"
   puts "2. Input cohort"
-  puts "3. Save file students.csv"
-  puts "4. Show students"
-  puts "5. Show students by cohort"
-  puts "6. Show students by letter"
-  puts "7. Show students by character number"
+  puts "3. Save file to test_students.csv"
+  puts "4. Load from file test_students.csv"
+  puts "5. Show students"
+  puts "6. Show students by cohort"
+  puts "7. Show students by letter"
+  puts "8. Show students by character number"
   puts "9. Exit"
 end
 
@@ -20,12 +21,14 @@ def process(selection)
     when "3"
       save_students
     when "4"
-      show_students
+      load_students
     when "5"
-      print_by_cohort
+      show_students
     when "6"
-      print_by_letter
+      print_by_cohort
     when "7"
+      print_by_letter
+    when "8"
       length_selected
     when "9"
       exit
@@ -103,6 +106,16 @@ def print_by_cohort
     puts students_by_cohort[choice].join(', ')
   end
 end
+
+def load_students
+  file = File.open("test_students.csv", "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
 
 def print_header
   puts "The students of Villains Academy"
