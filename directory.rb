@@ -1,3 +1,30 @@
+# basic version, for additional methods see test_directory.rb
+def interactive_menu
+  students = []
+  loop do
+# 1. print options and ask for input
+    puts "1. Input students"
+    puts "2. Show students"
+    puts "9. Exit"
+# 2. save input to variable
+    selection = gets.chomp
+# 3. do the correct action
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit
+    else
+      puts "I don't know what that means, try again."
+    end
+  end 
+end
+
+
 def input_students
   puts "Enter student record:"
   puts "(hit return twice to finish)"
@@ -26,7 +53,9 @@ def print_footer(names)
   puts "Overall, we have #{names.count} great students."
 end
 
-students = input_students
-print_header
-print(students)
-print_footer(students)
+
+interactive_menu
+# students = input_students
+# print_header
+# print(students)
+# print_footer(students)
