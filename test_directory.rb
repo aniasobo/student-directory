@@ -40,7 +40,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -57,7 +57,7 @@ end
 def input_students
   puts "Enter student record:"
   puts "(hit return twice to finish)"
-  name = gets.chomp
+  name = STDIN.gets.chomp
   while !name.empty? do 
     @students << {name: name}
     if @students.count == 1
@@ -65,7 +65,7 @@ def input_students
     else
       puts "Now we have #{@students.count} students."
     end
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -74,16 +74,16 @@ def input_cohort
   loop do
     puts "Choosing cohort"
     puts "Choose candidate to assign cohort to:"
-    name = gets.chomp
+    name = STDIN.gets.chomp
     puts "Choose cohort for #{name}"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     @students.find do |student|  
       if student[:name] == name 
         student[:cohort] = cohort
       end
     end
     puts "Do you wish to assing another? Y/N"
-    answer = gets.chomp
+    answer = STDIN.gets.chomp
     break if answer == "N" 
   end
 end
@@ -101,14 +101,14 @@ def print_by_cohort
   end
   loop do 
     puts "Choose cohort to display. Say stop to exit"
-    choice = gets.chomp
+    choice = STDIN.gets.chomp
     break if choice == "stop"
     puts students_by_cohort[choice].join(', ')
   end
 end
 
-def load_students
-  file = File.open("test_students.csv", "r")
+def load_students(filename = "test_students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -141,7 +141,7 @@ end
 # this method asks the user for a letter to sort by
 def print_by_letter
   puts "Enter letter to sort by"
-  letter = gets.chomp.upcase
+  letter = STDIN.gets.chomp.upcase
   @students.each do |student|
     if "#{student[:name]}".start_with?(letter) == true
       puts "#{student[:name]} (#{student[:cohort]} cohort)"
@@ -152,7 +152,7 @@ end
 # this method asks user for character limit
 def length_selected
   puts "Enter max number of characters"
-  num = gets.chomp.to_i
+  num = STDIN.gets.chomp.to_i
   @students.each do |student|
     if "#{student[:name]}".length <= num
       puts "#{student[:name]} (#{student[:cohort]} cohort)"
