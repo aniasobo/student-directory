@@ -12,14 +12,19 @@ end
 def process(selection)
   case selection
     when "1"
+      puts "You picked 1. Input students"
       input_students
     when "2"
+      puts "You picked 2. Show students"
       show_students
     when "3"
+      puts "You picked 3. Save"
       save_students
     when "4"
+      puts "You picked 4. Load students.csv"
       load_students
     when "9"
+      puts "bye!"
       exit
     else
       puts "I don't know what that means, try again."
@@ -96,7 +101,7 @@ def print_footer
   puts "Overall, we have #{@students.count} great students."
 end
 
-
+try_load_students
 interactive_menu
 # load_students loads with default value
 # load_students(argument) loads given file
