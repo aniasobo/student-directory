@@ -59,13 +59,21 @@ def input_students
   end
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
+def load_students #(filename = "students.csv")
+  puts "Enter name of file"
+  filename = STDIN.gets.chomp
+  File.open(filename, "r") do |file|
+    file.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
-  file.close
+end
+#  file = File.open(filename, "r")
+#  file.readlines.each do |line|
+#    name, cohort = line.chomp.split(',')
+#    @students << {name: name, cohort: cohort.to_sym}
+#  end
+#  file.close
 end
 
 def try_load_students
@@ -101,7 +109,6 @@ def print_footer
   puts "Overall, we have #{@students.count} great students."
 end
 
-try_load_students
 interactive_menu
 # load_students loads with default value
 # load_students(argument) loads given file
