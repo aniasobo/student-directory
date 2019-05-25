@@ -1,11 +1,12 @@
 # additional methods in test_directory.rb
+require 'csv'
 @students = []
 
 def print_menu
   puts "1. Input students"
   puts "2. Show students"
   puts "3. Save file students.csv"
-  puts "4. Load students.csv"
+  puts "4. Load csv file"
   puts "9. Exit"
 end
 
@@ -39,13 +40,12 @@ def interactive_menu
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+  file = CSV.read('students.csv')
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(", ")
-    file.puts csv_line
+    file.push csv_line
   end
-  file.close
 end
 
 def input_students
@@ -59,21 +59,12 @@ def input_students
   end
 end
 
-def load_students #(filename = "students.csv")
+def load_students
   puts "Enter name of file"
   filename = STDIN.gets.chomp
-  File.open(filename, "r") do |file|
-    file.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  CSV.foreach(filename) do |name, cohort|
+    @students << {name: name, cohort: cohort}
   end
-end
-#  file = File.open(filename, "r")
-#  file.readlines.each do |line|
-#    name, cohort = line.chomp.split(',')
-#    @students << {name: name, cohort: cohort.to_sym}
-#  end
-#  file.close
 end
 
 def try_load_students
